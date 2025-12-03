@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# 🛡️ PDF Metadata Guardian
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Secure, Client-Side PDF Analysis & Optimization Tool**
+>
+> *Analyze, Edit, and Secure your PDFs without them ever leaving your browser.*
 
-Currently, two official plugins are available:
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=github)](https://codeXsahil.github.io/pdftool)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-6.0-purple?style=for-the-badge&logo=vite)](https://vitejs.dev)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Overview
 
-## React Compiler
+**PDF Metadata Guardian** is a powerful web application designed for privacy-conscious users who need to inspect, edit, and secure PDF documents. Unlike other online tools, **all processing happens 100% on your device**. Your files are never uploaded to any server, ensuring complete confidentiality.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Key Features
 
-## Expanding the ESLint configuration
+### 🔍 Deep Analysis
+- **Metadata Inspector**: View and edit standard metadata (Title, Author, Creator, Producer, Dates).
+- **Risk Analysis**: Detect potential security risks like JavaScript, embedded files, and form actions.
+- **Timezone Forensics**: Reveal the original timezone offset from creation dates.
+- **History Analysis**: Track document modification history and software versions.
+- **Geo-Tag Scanner**: Identify potential location data hidden in metadata.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🛡️ Security Suite
+- **Watermarking**: Add custom text overlays (e.g., "CONFIDENTIAL") to all pages.
+- **Deep Sanitization**: "Nuke" button to strip all metadata and reset dates to the **1970 Epoch** for maximum anonymity.
+- **PDF/A Converter**: Convert documents to PDF/A-1b archival standard.
+- **Compression**: Optimize file size by removing redundant objects.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎯 Quality & Accessibility
+- **ATS Keyword Scanner**: Paste a job description to check if your resume matches required keywords.
+- **WCAG Audit**: Check for accessibility compliance (Tags, Language, Title).
+- **Spell Check & Grammar**: Detect common typos and language mismatches.
+- **Print Margin Checker**: Identify potential layout issues for printing.
+- **Contrast Analyzer**: Heuristic check for low-contrast text.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 💻 Power User Tools
+- **JSON Export**: Download full analysis reports for offline review.
+- **Font & Link Inspector**: List all embedded fonts and external hyperlinks.
+- **Batch Processing**: Analyze multiple files simultaneously.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Frontend**: React 19, TypeScript
+- **Build Tool**: Vite
+- **Styling**: TailwindCSS, Framer Motion (Animations), Lucide React (Icons)
+- **PDF Core**: 
+  - `pdf-lib` (Modification, Creation)
+  - `pdfjs-dist` (Text Extraction, Parsing)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📦 Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/codeXsahil/pdftool.git
+    cd pdftool
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run development server**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Build for production**
+    ```bash
+    npm run build
+    ```
+
+## 🔒 Privacy Promise
+
+We believe in **Privacy by Design**.
+- **No Server Uploads**: Everything runs in your browser's WebAssembly / JS engine.
+- **No Analytics**: We don't track your document content.
+- **Open Source**: You can inspect the code to verify our claims.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+<p align="center">
+  Made with ❤️ for Privacy
+</p>
