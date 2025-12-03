@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 className="inline-flex items-center justify-center p-3 bg-blue-500/10 rounded-2xl mb-4"
             >
-                <img src="/logo.png" alt="PDF Guardian Logo" className="w-12 h-12 object-contain" />
+                <img src={`${import.meta.env.BASE_URL}logo.png`} alt="PDF Guardian Logo" className="w-12 h-12 object-contain" />
             </motion.div>
             <motion.h1
                 initial={{ opacity: 0, y: -20 }}
