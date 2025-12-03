@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Github, Twitter, Heart } from 'lucide-react';
+import { Github, Twitter, Heart } from 'lucide-react';
 
 interface FooterProps {
     onNavigate: (tab: 'metadata' | 'security' | 'analysis' | 'quality') => void;
@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLegal }) => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
                     <div className="col-span-1 md:col-span-2">
                         <div className="flex items-center gap-2 mb-4">
-                            <Shield className="text-blue-400" size={24} />
+                            <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
                             <span className="text-xl font-bold text-white">PDF Metadata Guardian</span>
                         </div>
                         <p className="text-slate-400 text-sm leading-relaxed max-w-md">
