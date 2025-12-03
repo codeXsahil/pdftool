@@ -11,6 +11,7 @@ import { AnalysisTools } from './components/AnalysisTools';
 import { QualityTools } from './components/QualityTools';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { FeatureBrief } from './components/FeatureBrief';
 import { LegalModal } from './components/LegalModal';
 import {
   extractMetadata, analyzeRisk, modifyMetadata, sanitizeMetadata, extractText, analyzeATS,
@@ -305,6 +306,7 @@ function App() {
                 className="flex flex-col items-center justify-center py-12"
               >
                 <FileUpload onFileSelect={handleFileSelect} />
+                <FeatureBrief />
               </motion.div>
             ) : activeItem ? (
               <motion.div
