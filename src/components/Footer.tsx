@@ -1,23 +1,22 @@
 import React from 'react';
 import { Github, Twitter, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface FooterProps {
     onNavigate: (tab: 'metadata' | 'security' | 'analysis' | 'quality') => void;
     onOpenLegal: (type: 'privacy' | 'terms' | 'about' | 'contact') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLegal }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
     const currentYear = new Date().getFullYear();
-
-    const handleNav = (e: React.MouseEvent, tab: 'metadata' | 'security' | 'analysis' | 'quality') => {
-        e.preventDefault();
-        onNavigate(tab);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
 
     const handleLegal = (e: React.MouseEvent, type: 'privacy' | 'terms' | 'about' | 'contact') => {
         e.preventDefault();
         onOpenLegal(type);
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     return (
@@ -39,10 +38,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLegal }) => {
                     <div>
                         <h4 className="font-semibold text-white mb-4">Features</h4>
                         <ul className="space-y-2 text-sm text-slate-400">
-                            <li><a href="#" onClick={(e) => handleNav(e, 'metadata')} className="hover:text-blue-400 transition-colors">Metadata Editor</a></li>
-                            <li><a href="#" onClick={(e) => handleNav(e, 'security')} className="hover:text-blue-400 transition-colors">Security Analysis</a></li>
-                            <li><a href="#" onClick={(e) => handleNav(e, 'analysis')} className="hover:text-blue-400 transition-colors">Deep Analysis</a></li>
-                            <li><a href="#" onClick={(e) => handleNav(e, 'quality')} className="hover:text-blue-400 transition-colors">Quality & Accessibility</a></li>
+                            <li><Link to="/metadata" onClick={scrollToTop} className="hover:text-blue-400 transition-colors">Metadata Editor</Link></li>
+                            <li><Link to="/security" onClick={scrollToTop} className="hover:text-blue-400 transition-colors">Security Analysis</Link></li>
+                            <li><Link to="/analysis" onClick={scrollToTop} className="hover:text-blue-400 transition-colors">Deep Analysis</Link></li>
+                            <li><Link to="/quality" onClick={scrollToTop} className="hover:text-blue-400 transition-colors">Quality & Accessibility</Link></li>
                         </ul>
                     </div>
 

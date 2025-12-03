@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useLocation, useNavigate, Routes, Route, Navigate } from 'react-router-dom';
 import { FileUpload } from './components/FileUpload';
 import { MetadataViewer } from './components/MetadataViewer';
 import { MetadataEditor } from './components/MetadataEditor';
@@ -39,8 +40,19 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showPreview, setShowPreview] = useState(true);
-  const [activeTab, setActiveTab] = useState<'metadata' | 'security' | 'analysis' | 'quality'>('metadata');
   const [legalModalType, setLegalModalType] = useState<'privacy' | 'terms' | 'about' | 'contact' | null>(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Determine active tab from path
+  const getActiveTab = () => {
+    const path = location.pathname.substring(1); // remove leading slash
+    if (path === '' || path === 'upload') return 'metadata';
+    return path as 'metadata' | 'security' | 'analysis' | 'quality';
+  };
+
+  const activeTab = getActiveTab();
 
 
   const activeItem = batchItems.find(item => item.id === activeItemId);
@@ -264,7 +276,7 @@ function App() {
     if (activeItemId === id) {
       setActiveItemId(null);
       setIsEditing(false);
-      setActiveTab('metadata'); // Reset tab when item is removed
+      navigate('/'); // Reset to home
     }
   };
 
@@ -272,7 +284,7 @@ function App() {
     setBatchItems([]);
     setActiveItemId(null);
     setIsEditing(false);
-    setActiveTab('metadata'); // Reset tab on full reset
+    navigate('/'); // Reset to home
   };
 
   return (
@@ -353,25 +365,25 @@ function App() {
                     {/* Tabs */}
                     <div className="flex mb-6 bg-slate-800/50 p-1 rounded-xl border border-slate-700">
                       <button
-                        onClick={() => { setActiveTab('metadata'); setIsEditing(false); }}
+                        onClick={() => { navigate('/metadata'); setIsEditing(false); }}
                         className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${activeTab === 'metadata' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
                       >
                         Metadata & Risk
                       </button>
                       <button
-                        onClick={() => setActiveTab('security')}
+                        onClick={() => navigate('/security')}
                         className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${activeTab === 'security' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
                       >
                         Security & Tools
                       </button>
                       <button
-                        onClick={() => setActiveTab('analysis')}
+                        onClick={() => navigate('/analysis')}
                         className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${activeTab === 'analysis' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
                       >
                         Deep Analysis
                       </button>
                       <button
-                        onClick={() => setActiveTab('quality')}
+                        onClick={() => navigate('/quality')}
                         className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${activeTab === 'quality' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
                       >
                         <CheckSquare size={16} className="inline mr-2" />
@@ -381,64 +393,67 @@ function App() {
 
                     {/* Tab Content */}
                     <div className="space-y-6">
-                      {activeTab === 'metadata' && (
-                        <>
-                          {!isEditing ? (
-                            <>
-                              <div className="flex justify-end">
-                                <button
-                                  onClick={() => setIsEditing(true)}
-                                  className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-white transition-colors"
-                                >
-                                  <Edit size={16} />
-                                  <span>Edit Metadata</span>
-                                </button>
-                              </div>
-                              <MetadataViewer
-                                metadata={activeItem.metadata}
-                                riskAnalysis={activeItem.risk}
-                                onScanATS={handleScanATS}
-                                atsAnalysis={activeItem.atsAnalysis}
+                      <Routes>
+                        <Route path="/" element={<Navigate to="/metadata" replace />} />
+                        <Route path="/metadata" element={
+                          <>
+                            {!isEditing ? (
+                              <>
+                                <div className="flex justify-end">
+                                  <button
+                                    onClick={() => setIsEditing(true)}
+                                    className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-white transition-colors"
+                                  >
+                                    <Edit size={16} />
+                                    <span>Edit Metadata</span>
+                                  </button>
+                                </div>
+                                <MetadataViewer
+                                  metadata={activeItem.metadata}
+                                  riskAnalysis={activeItem.risk}
+                                  onScanATS={handleScanATS}
+                                  atsAnalysis={activeItem.atsAnalysis}
+                                />
+                              </>
+                            ) : (
+                              <MetadataEditor
+                                initialMetadata={activeItem.metadata}
+                                onSave={handleSaveMetadata}
+                                onCancel={() => setIsEditing(false)}
                               />
-                            </>
-                          ) : (
-                            <MetadataEditor
-                              initialMetadata={activeItem.metadata}
-                              onSave={handleSaveMetadata}
-                              onCancel={() => setIsEditing(false)}
-                            />
-                          )}
-                        </>
-                      )}
+                            )}
+                          </>
+                        } />
 
-                      {activeTab === 'security' && (
-                        <SecurityTools
-                          onWatermark={handleWatermark}
-                          onCompress={handleCompress}
-                          onPdfA={handlePdfA}
-                        />
-                      )}
+                        <Route path="/security" element={
+                          <SecurityTools
+                            onWatermark={handleWatermark}
+                            onCompress={handleCompress}
+                            onPdfA={handlePdfA}
+                          />
+                        } />
 
-                      {activeTab === 'analysis' && (
-                        <AnalysisTools
-                          fontAnalysis={activeItem.fontAnalysis}
-                          linkAnalysis={activeItem.linkAnalysis}
-                          historyAnalysis={activeItem.historyAnalysis}
-                          geoAnalysis={activeItem.geoAnalysis}
-                          onAnalyzeFonts={handleAnalyzeFonts}
-                          onAnalyzeLinks={handleAnalyzeLinks}
-                          onAnalyzeHistory={handleAnalyzeHistory}
-                          onAnalyzeGeo={handleAnalyzeGeo}
-                        />
-                      )}
+                        <Route path="/analysis" element={
+                          <AnalysisTools
+                            fontAnalysis={activeItem.fontAnalysis}
+                            linkAnalysis={activeItem.linkAnalysis}
+                            historyAnalysis={activeItem.historyAnalysis}
+                            geoAnalysis={activeItem.geoAnalysis}
+                            onAnalyzeFonts={handleAnalyzeFonts}
+                            onAnalyzeLinks={handleAnalyzeLinks}
+                            onAnalyzeHistory={handleAnalyzeHistory}
+                            onAnalyzeGeo={handleAnalyzeGeo}
+                          />
+                        } />
 
-                      {activeTab === 'quality' && (
-                        <QualityTools
-                          analysis={activeItem.qualityAnalysis}
-                          onAnalyze={handleAnalyzeQuality}
-                          isAnalyzing={isProcessing}
-                        />
-                      )}
+                        <Route path="/quality" element={
+                          <QualityTools
+                            analysis={activeItem.qualityAnalysis}
+                            onAnalyze={handleAnalyzeQuality}
+                            isAnalyzing={isProcessing}
+                          />
+                        } />
+                      </Routes>
                     </div>
                   </div>
                 </div>
@@ -485,7 +500,7 @@ function App() {
           )}
         </div>
         <Footer
-          onNavigate={(tab) => setActiveTab(tab)}
+          onNavigate={(tab) => navigate(`/${tab}`)}
           onOpenLegal={(type) => setLegalModalType(type)}
         />
       </div>
