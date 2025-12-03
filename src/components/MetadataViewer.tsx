@@ -187,7 +187,11 @@ export const MetadataViewer: React.FC<MetadataViewerProps> = ({ metadata, riskAn
                     <MetadataItem
                         icon={<Clock size={18} />}
                         label="Original Timezone"
-                        value={metadata.timezoneOffset}
+                        value={
+                            metadata.timezoneOffset === 'Z'
+                                ? 'UTC (Zulu Time)'
+                                : metadata.timezoneOffset.replace(/'/g, ':').replace(/:$/, '')
+                        }
                         className="text-blue-400"
                     />
                 )}
