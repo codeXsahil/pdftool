@@ -68,9 +68,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
                             <Twitter size={20} />
                         </a>
                         <div className="flex items-center gap-1 text-sm text-slate-500">
-                            <span>Made with</span>
-                            <Heart size={14} className="text-red-500 fill-red-500" />
-                            <span>for privacy</span>
+                            <span>Developed by</span>
+                            <a href="https://www.linkedin.com/in/31sahilgupta/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 font-medium flex items-center gap-1">
+                                Sahil Gupta
+                            </a>
+                            <Heart size={14} className="text-red-500 fill-red-500 ml-1" />
                         </div>
                     </div>
                 </div>

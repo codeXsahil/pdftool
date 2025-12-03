@@ -51,6 +51,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
                     <p>PDF Metadata Guardian was built with a single mission: to make PDF security and privacy accessible to everyone.</p>
                     <p>Many online PDF tools require you to upload your sensitive documents to their servers, creating a potential security risk. We wanted to build a powerful alternative that runs 100% in the browser.</p>
                     <p>Powered by modern web technologies like WebAssembly and PDF.js, we bring desktop-class performance to the web.</p>
+                    <div className="mt-4 pt-4 border-t border-slate-700">
+                        <p className="text-sm text-slate-400">Developed by <a href="https://www.linkedin.com/in/31sahilgupta/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 font-medium">Sahil Gupta</a></p>
+                    </div>
                 </div>
             )
         },
